@@ -1,17 +1,17 @@
 <script>
-
 import '../assets/css/STYLE_PokemonCard.css';
+import { useCartStore } from '@/stores/cartStore'; // Import du store Pinia
 
 export default {
   props: {
     id: {
-      type:String,
-      required:true,
-    }
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
-      pokemon : Object,
+      pokemon: null,
       typeColors: {
         fire: "#F57D31",
         bug: "#A7B723",
@@ -31,118 +31,148 @@ export default {
         dragon: "#7037FF",
         dark: "#75574C",
         fairy: "#E69EAC",
-    },
-
-    }
+      },
+    };
   },
   methods: {
-
     async fetchPokemon() {
-      const response = await fetch('https://pokeapi.co/api/v2/pokemon/'+this.id);
-
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon/' + this.id);
       if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has occurred: ${response.status}`;
         throw new Error(message);
       }
-
       this.pokemon = await response.json();
-      this.updateMainColor(this.pokemon.types[0].type.name);
-
+      this.updateMainColor(this.pokemon.types[0].type.name); // Utilisation de la couleur du type
     },
-     getWeightAndHeight(w) {
-    return w/10;
 
+    updateMainColor(typeName) {
+      const color = this.typeColors[typeName];
+      if (color) {
+        document.documentElement.style.setProperty('--main-color', color); // Mise à jour de la couleur
+      } else {
+        console.warn(`Type ${typeName} not found in typeColors`);
+      }
+    },
+
+    // Fonction pour ajouter un Pokémon au panier
+    addToCart() {
+      const cartStore = useCartStore();
+      const existingItem = cartStore.cart.find(item => item.id === this.pokemon.id);
+
+      if (existingItem) {
+        cartStore.incrementQuantity(this.pokemon.id);
+      } else {
+        cartStore.addToCart({
+          id: this.pokemon.id,
+          name: this.pokemon.name,
+          price: this.pokemon.base_experience,
+          image: this.pokemon.sprites.other.dream_world.front_default,
+          quantity: 1,
+        });
+      }
+    },
+
+    // Fonction pour retirer un Pokémon du panier
+    removeFromCart() {
+      const cartStore = useCartStore();
+      cartStore.removeFromCart(this.pokemon.id); // Fonction que tu devras ajouter dans ton cartStore
+    },
+
+    incrementQuantity() {
+      const cartStore = useCartStore();
+      cartStore.incrementQuantity(this.pokemon.id);
+    },
+
+    decrementQuantity() {
+      const cartStore = useCartStore();
+      cartStore.decrementQuantity(this.pokemon.id);
+    },
+    getWeightAndHeight(w) {
+      return w / 10;
+    },
   },
 
-  updateMainColor(typeName) {
-    // Vérifie si le type existe dans la liste des couleurs
-    const color = this.typeColors[typeName];
-    if (color) {
-      document.documentElement.style.setProperty('--main-color', color); // Met à jour la variable CSS
-    } else {
-      console.warn(`Type ${typeName} not found in typeColors`);
-    }
+  computed: {
+    cartItem() {
+      const cartStore = useCartStore();
+      return cartStore.cart.find(item => item.id === this.pokemon?.id);
+    },
   },
-},
-
-mounted() {
+  mounted() {
     this.fetchPokemon();
   },
-}
-
+};
 </script>
 
 <template>
   <div class="pokemon-item-container">
+    <div class="pokemon-item">
+      <h1 class="pokemon-name">{{ this.pokemon?.name }}</h1>
+      <h2 class="pokemon-id">#{{ this.pokemon?.id }}</h2>
 
+      <img v-if="this.pokemon?.sprites" class="pokemon-img" :src="pokemon.sprites.other.dream_world.front_default"
+        :alt="this.pokemon.name" />
 
-  <div class="pokemon-item">
-    <h1 class="pokemon-name">{{ this.pokemon.name }}</h1>
-    <h2 class="pokemon-id">#{{ this.pokemon.id }}</h2>
-
-    <img v-if="this.pokemon.sprites" class="pokemon-img" :src=pokemon.sprites.other.dream_world.front_default :alt=this.pokemon.name>
-
-
-    <div class="bottom-side">
-      <div class="types">
-        <p
-        v-for="type in this.pokemon.types"
-        :key="type.slot"
-        :class="`type-${type.type.name}`"
-      >
-      {{ type.type.name }}</p>
-    </div>
-    <h1>About</h1>
+      <div class="bottom-side">
+        <div class="types">
+          <p v-for="type in this.pokemon?.types" :key="type.slot" :class="`type-${type.type.name}`">
+            {{ type.type.name }}
+          </p>
+        </div>
+        <h1>About</h1>
 
         <div class="infos">
-
           <div>
-            <p>{{ this.getWeightAndHeight(this.pokemon.weight) }}kg</p>
-
+            <p>{{ this.getWeightAndHeight(this.pokemon?.weight) }}kg</p>
             <p class="desc">Weight</p>
-
           </div>
 
           <div>
-
-            <p>{{ this.getWeightAndHeight(this.pokemon.height) }}m</p>
-
+            <p>{{ this.getWeightAndHeight(this.pokemon?.height) }}m</p>
             <p class="desc">Height</p>
-
           </div>
-
 
           <div class="abilities">
-          <p
-          v-for="ability in this.pokemon.abilities"
-          :key="ability.slot">
-        {{ ability.ability.name }}</p>
-        <p class="desc">Moves</p>
-
+            <p v-for="ability in this.pokemon?.abilities" :key="ability.slot">
+              {{ ability.ability.name }}
+            </p>
+            <p class="desc">Moves</p>
+          </div>
         </div>
-        </div>
-
 
         <h1>Base Stats</h1>
 
         <div class="stats">
-          <div
-          v-for="stat in this.pokemon.stats"
-          :key="stat.slot">
+          <div v-for="stat in this.pokemon?.stats" :key="stat.stat.name">
             <div class="stat-item">
-              <p>{{ stat.stat.name }}</p><progress class="custom-progress" :value="stat.base_stat" max="100"></progress>
+              <p>{{ stat.stat.name }}</p>
+              <progress class="custom-progress" :value="stat.base_stat" max="100"></progress>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Section d'achat -->
+    <div class="pokemon-purchase">
+      <h1>Price: {{ this.pokemon?.base_experience }}$</h1>
+
+      <!-- Si le Pokémon est dans le panier, afficher la gestion de la quantité et le bouton "Remove" -->
+      <div v-if="cartItem">
+        <div class="quantity-controls">
+          <button @click="decrementQuantity" :disabled="cartItem.quantity <= 0">-</button>
+          <span>Quantity: {{ cartItem.quantity }}</span>
+          <button @click="incrementQuantity">+</button>
+        </div>
+        <!-- Bouton pour retirer le Pokémon du panier -->
+        <button @click="removeFromCart">Remove from cart</button>
       </div>
 
-
-      <div class="pokemon-purchase">
-        <h1>Price: {{ this.pokemon.base_experience }}$</h1>
-        <button>Buy</button>
-
+      <!-- Si le Pokémon n'est pas dans le panier, afficher le bouton "Buy" -->
+      <div v-else>
+        <button @click="addToCart">Buy 0</button>
       </div>
+    </div>
 
   </div>
 </template>
