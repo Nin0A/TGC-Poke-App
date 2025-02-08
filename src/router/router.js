@@ -4,6 +4,7 @@ import PokemonListView from '@/components/PokemonListView.vue'
 import PokemonCard from '@/components/PokemonCard.vue'
 import ShopView from '@/components/ShopView.vue'
 import ShopHistoryView from '@/components/ShopHistoryView.vue'
+import ShopConfirmationView from '@/components/ShopConfirmationView.vue'
 
 
 const routes = [
@@ -25,7 +26,16 @@ const routes = [
   },
   {
     path: '/shop-history',
-    component: ShopHistoryView
+    component: ShopHistoryView,
+    name: 'shop-history',
+
+  },
+
+  {
+    path: '/shop-confirmation',
+    component: ShopConfirmationView,
+    name: 'shop-confirmation',
+
   }
 
 ]

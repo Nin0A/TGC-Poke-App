@@ -1,7 +1,15 @@
 <script>
 import '../src/assets/css/STYLE_PokemonHome.css';
+import { useCartStore } from '@/stores/cartStore';
+export default {
+computed: {
+    cartItems() {
+      const cartStore = useCartStore();
+      return cartStore.getTotalQuantity();
+    }
 
-
+  }
+}
 </script>
 
 <template>
@@ -14,12 +22,24 @@ import '../src/assets/css/STYLE_PokemonHome.css';
         </router-link>
       </div>
 
+      <div class="links-section">
+      <div class="history-section">
+        <router-link :to="{ name: 'shop-history' }">
+          <p>Orders history</p>
+        </router-link>
+      </div>
+
       <div class="card-section">
         <router-link :to="{ name: 'shop' }">
 
-          <img class="logo" src="../src/assets/svg/Basket_alt_3_light.svg" alt="">
-        </router-link>
+          <div class="cart-container">
+            <p>Cart</p>
+            <p class="qty">{{ cartItems }}</p>
+          </div>
+
+      </router-link>
       </div>
+    </div>
     </div>
 
     <main>

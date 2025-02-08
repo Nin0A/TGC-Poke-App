@@ -145,7 +145,8 @@ export default {
         <div class="stats">
           <div v-for="stat in this.pokemon?.stats" :key="stat.stat.name">
             <div class="stat-item">
-              <p>{{ stat.stat.name }}</p>
+              <p class="stat-name">{{ stat.stat.name }}</p>
+              <p>{{ stat.base_stat }}</p>
               <progress class="custom-progress" :value="stat.base_stat" max="100"></progress>
             </div>
           </div>
@@ -155,22 +156,29 @@ export default {
 
     <!-- Section d'achat -->
     <div class="pokemon-purchase">
-      <h1>Price: {{ this.pokemon?.base_experience }}$</h1>
+      <h1 class="price">Price: {{ this.pokemon?.base_experience }}$</h1>
 
       <!-- Si le Pokémon est dans le panier, afficher la gestion de la quantité et le bouton "Remove" -->
       <div v-if="cartItem">
         <div class="quantity-controls">
           <button @click="decrementQuantity" :disabled="cartItem.quantity <= 0">-</button>
-          <span>Quantity: {{ cartItem.quantity }}</span>
+          <span class="display-qty">Quantity: {{ cartItem.quantity }}</span>
           <button @click="incrementQuantity">+</button>
         </div>
         <!-- Bouton pour retirer le Pokémon du panier -->
-        <button @click="removeFromCart">Remove from cart</button>
+        <button class="remove-button" @click="removeFromCart">Remove from cart</button>
+        <router-link :to="{ name: 'shop' }">
+
+        <div class="cart-container-link">
+          <p>Go to Cart</p>
+        </div>
+
+        </router-link>
       </div>
 
       <!-- Si le Pokémon n'est pas dans le panier, afficher le bouton "Buy" -->
       <div v-else>
-        <button @click="addToCart">Buy 0</button>
+        <button class="buy-button-card" @click="addToCart">Buy</button>
       </div>
     </div>
 
