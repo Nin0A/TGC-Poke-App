@@ -1,8 +1,34 @@
+<script>
+import { useCartStore } from '@/stores/cartStore';
+import { computed, watchEffect } from 'vue';
+import '../assets/css/STYLE_ShopHistoryView.css';
+
+
+export default {
+  setup() {
+    const cartStore = useCartStore();
+
+    // Assurer la synchronisation avec localStorage au chargement
+    watchEffect(() => {
+      if (cartStore.orderHistory.length === 0) {
+        const storedHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+        cartStore.orderHistory = storedHistory;
+      }
+    });
+
+    return {
+      orderHistory: computed(() => cartStore.orderHistory)
+    };
+  }
+};
+</script>
+
+
 <template>
   <div class="order-history">
     <h1>Order History</h1>
     <div v-if="orderHistory.length > 0">
-      <ul>
+      <ul class="order-container">
         <li v-for="(order, index) in orderHistory" :key="index" class="order-item">
           <div>
             <h3>Order #{{ index + 1 }}</h3>
@@ -21,26 +47,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { useCartStore } from '@/stores/cartStore'; // Store Pinia
-
-export default {
-  computed: {
-    orderHistory() {
-      const cartStore = useCartStore();
-      // Vérification de l'historique dans le store
-      console.log("Order History in Store:", cartStore.orderHistory);
-
-      // Si l'historique est vide, tenter de récupérer à partir du localStorage
-      if (cartStore.orderHistory.length === 0) {
-        const storedHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
-        console.log("Order History from localStorage:", storedHistory);
-        return storedHistory;
-      }
-
-      return cartStore.orderHistory;
-    }
-  }
-};
-</script>

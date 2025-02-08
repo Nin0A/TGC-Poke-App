@@ -2,15 +2,15 @@ import { defineStore } from 'pinia';
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    cart: [], // Le panier contient les objets ajoutés
+    cart: [],
+    orderHistory: JSON.parse(localStorage.getItem('orderHistory')) || [] // Charger depuis localStorage
   }),
   actions: {
     addToCart(pokemon) {
-      this.cart.push(pokemon); // Ajoute le Pokémon au panier
+      this.cart.push(pokemon);
     },
 
     removeFromCart(pokemonId) {
-      // Supprime le Pokémon par son ID
       this.cart = this.cart.filter(item => item.id !== pokemonId);
     },
 
@@ -25,12 +25,17 @@ export const useCartStore = defineStore('cart', {
     },
 
     clearCart() {
-      this.cart = []; // Vide le panier
+      this.cart = [];
     },
 
-    setOrderHistory(items) {
-      // Sauvegarde l'historique des commandes
-      this.orderHistory = items;
+    setOrderHistory(order) {
+      this.orderHistory.push(order);
+      localStorage.setItem('orderHistory', JSON.stringify(this.orderHistory)); // Sauvegarde dans localStorage
     },
-  },
+
+    getTotalQuantity() {
+      return this.cart.reduce((total, item) => total + (item.quantity || 1), 0);
+    }
+
+  }
 });

@@ -1,5 +1,6 @@
 <script>
 import { useCartStore } from '@/stores/cartStore';
+import '../assets/css/STYLE_ShopView.css';
 
 export default {
   data() {
@@ -18,20 +19,28 @@ export default {
       cartStore.clearCart();
     },
     proceedToCheckout() {
-      const cartStore = useCartStore();
-      const cartItems = cartStore.cart;
+  const cartStore = useCartStore();
+  const cartItems = cartStore.cart;
 
-      if (cartItems.length > 0) {
-        // Enregistrer l'historique des achats dans le store
-        cartStore.setOrderHistory(cartItems);
+  if (cartItems.length > 0) {
+    // Créer une nouvelle commande
+    const order = {
+      items: [...cartItems], // Copie du panier
+      totalPrice: cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
+      date: new Date().toLocaleString() // Ajouter une date à la commande
+    };
 
-        // Vider le panier
-        cartStore.clearCart();
+    // Ajouter cette commande à l'historique
+    cartStore.setOrderHistory(order);
 
-        // Rediriger vers la page de l'historique des commandes
-        this.$router.push('/shop-history');
-      }
-    },
+    // Vider le panier
+    cartStore.clearCart();
+
+    // Rediriger vers la page de l'historique des commandes
+    this.$router.push('/shop-history');
+  }
+},
+
     // Méthodes pour augmenter et diminuer la quantité
     incrementQuantity(itemId) {
       const cartStore = useCartStore();
@@ -62,57 +71,65 @@ export default {
 </script>
 <template>
   <div class="shop-container">
-    <h1>Shop</h1>
-
     <!-- Affichage du panier -->
     <div v-if="cartItems.length > 0" class="cart">
       <h2>Your Cart</h2>
-      <ul>
-        <!-- Liste des articles dans le panier -->
-        <li v-for="item in cartItems" :key="item.id" class="cart-item">
-          <img :src="item.image" :alt="item.name" class="pokemon-img" />
-          <div>
-            <h3>{{ item.name }} (x{{ item.quantity }})</h3>
-            <p>Price: {{ item.price }}$</p>
-            <p>Total: {{ item.price * item.quantity }}$</p>
-
-            <!-- Boutons pour modifier la quantité -->
-            <div class="quantity-controls">
-              <button @click="decrementQuantity(item.id)" :disabled="item.quantity <= 1">-</button>
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Unit</th>
+            <th>Total</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Liste des articles dans le panier -->
+          <tr v-for="item in cartItems" :key="item.id">
+            <td>
+              <img :src="item.image" :alt="item.name" class="pokemon-img" />
+            </td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}$</td>
+            <td>{{ item.price * item.quantity }}$</td>
+            <td>
               <span>{{ item.quantity }}</span>
-              <button @click="incrementQuantity(item.id)">+</button>
-            </div>
-
-            <!-- Bouton pour supprimer l'article du panier -->
-            <button @click="removeFromCart(item.id)">Remove</button>
-          </div>
-        </li>
-      </ul>
+            </td>
+            <td>
+              <div class="controls">
+                <button @click="decrementQuantity(item.id)" :disabled="item.quantity <= 1">
+                  <img src="../assets/svg/chevron_left.svg" alt="decrement" />
+                </button>
+                <button @click="incrementQuantity(item.id)">
+                  <img src="../assets/svg/chevron_right.svg" alt="increment" />
+                </button>
+                <button class="delete-button" @click="removeFromCart(item.id)">
+                  <img src="../assets/svg/close.svg" alt="delete" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <!-- Affichage du total -->
       <div class="cart-total">
-        <h3>Total: {{ totalPrice }}$</h3>
-      </div>
 
-      <!-- Bouton pour procéder à l'achat -->
-      <button @click="proceedToCheckout">Proceed to Checkout</button>
+         <!-- Bouton pour procéder à l'achat -->
+         <button class="checkout-button" @click="$router.push('/shop-confirmation')">Proceed to Checkout</button>
+         <h3>Total: {{ totalPrice }}$</h3>
+
+
+
+    </div>
     </div>
 
     <!-- Si le panier est vide -->
     <div v-else>
       <p>Your cart is empty</p>
     </div>
-
-    <!-- Affichage de la liste des Pokémons -->
-    <div class="pokemon-list">
-      <h2>Pokémon List</h2>
-      <ul>
-        <li v-for="pokemon in pokemon_list" :key="pokemon.id">
-          <h3>{{ pokemon.name }}</h3>
-          <img :src="pokemon.sprites?.other?.dream_world?.front_default" alt="pokemon.name" />
-          <p>{{ pokemon.base_experience }}$</p>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
+

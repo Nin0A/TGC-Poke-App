@@ -1,0 +1,100 @@
+@charset "UTF-8";
+.shop-container {
+  background-color: white;
+  height: 100%;
+  padding: 1em;
+  border-radius: 32px;
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+.shop-container .cart {
+  /* Style du tableau */
+  /* Style pour le total du panier */
+  /* Bouton pour procéder à l'achat */
+}
+.shop-container .cart h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.shop-container .cart .cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  /* En-tête du tableau */
+}
+.shop-container .cart .cart-table th, .shop-container .cart .cart-table td {
+  padding: 1em;
+  text-align: center;
+}
+.shop-container .cart .cart-table th {
+  background-color: #f4f4f4;
+  font-weight: 600;
+}
+.shop-container .cart .cart-table th:nth-child(4) {
+  width: 15em;
+}
+.shop-container .cart .cart-table th:nth-child(1) {
+  border-top-left-radius: 16px;
+}
+.shop-container .cart .cart-table th:nth-child(6) {
+  border-top-right-radius: 16px;
+}
+.shop-container .cart .cart-table td {
+  background-color: #f9f9f9;
+  text-align: center;
+  vertical-align: middle;
+}
+.shop-container .cart .cart-table td img {
+  width: 5em; /* Ajuste la taille de l'image */
+  height: auto;
+  justify-self: center;
+}
+.shop-container .cart .cart-table .controls {
+  display: flex;
+  justify-content: center;
+}
+.shop-container .cart .cart-table .controls button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  justify-self: center;
+}
+.shop-container .cart .cart-table .controls button img {
+  height: 2.5em;
+  width: 2.5em;
+}
+.shop-container .cart .cart-table .controls button:hover {
+  opacity: 0.8;
+}
+.shop-container .cart .cart-total {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1em;
+  text-align: right;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.shop-container .cart button {
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.checkout-button {
+  display: flex;
+  justify-self: center;
+  background-color: rgb(86, 74, 255);
+  padding: 1.1em;
+  font-weight: 700;
+}
+.checkout-button:hover {
+  background-color: rgb(129, 120, 250);
+}
+
+/*# sourceMappingURL=STYLE_ShopView.css.map */

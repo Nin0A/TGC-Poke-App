@@ -6,6 +6,7 @@ export default {
     return {
       pokemon_list: [],  // Liste des Pokémon filtrés pour affichage
       all_pokemons: [],  // Liste complète des Pokémons récupérés de l'API
+      current_pokemons:[],
       next_url: null,    // URL de la page suivante
       previous_url: null, // URL de la page précédente
       totalPages: 0,      // Nombre total de pages
@@ -65,6 +66,20 @@ export default {
       }
     },
 
+    goToNextPage() {
+  if (this.next_url) {
+    this.currentPage++;
+    this.fetchPokemons(this.next_url);
+  }
+},
+
+goToPreviousPage() {
+  if (this.previous_url) {
+    this.currentPage--;
+    this.fetchPokemons(this.previous_url);
+  }
+},
+
     // Fonction pour récupérer un Pokémon spécifique avec son URL
     async fetchSinglePokemon(url) {
       try {
@@ -100,10 +115,13 @@ export default {
 
     // Fonction pour appliquer la recherche et le filtre par type
     searchPokemons() {
+      console.log('searchpokemon');
       let filteredPokemons = this.all_pokemons;  // Filtrage sur la liste complète
 
+      console.log(filteredPokemons);
       // Filtrer par nom
       if (this.searchQuery.trim() !== '') {
+        console.log(this.searchQuery);
         filteredPokemons = filteredPokemons.filter((pokemon) =>
           pokemon.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
@@ -111,12 +129,16 @@ export default {
 
       // Filtrer par type
       if (this.selectedType) {
+      console.log(this.selectedType);
         filteredPokemons = filteredPokemons.filter((pokemon) =>
           pokemon.types.some(type => type.type.name === this.selectedType)
         );
+
       }
 
       this.pokemon_list = filteredPokemons;  // Mettre à jour la liste affichée
+
+      console.log(this.pokemon_list);
     },
 
     // Fonction de changement de type
@@ -140,16 +162,20 @@ export default {
 
 <template>
   <div>
+
+    <div class="search-options">
     <!-- Barre de recherche et sélecteur de type -->
     <div class="search-bar">
       <img src="../assets/svg/search.svg" alt="search-icon">
-      <input type="search" id="site-search" name="q" placeholder="Search Pokémon" v-model="searchQuery"
+      <input type="search" id="site-search" name="q" placeholder="Search Pokemon" v-model="searchQuery"
         @input="searchPokemons" />
+    </div>
 
-      <select v-model="selectedType" @change="filterByType">
+    <select v-model="selectedType" @change="filterByType">
         <option value="">All Types</option>
         <option v-for="(color, type) in typeColors" :key="type" :value="type">{{ type }}</option>
       </select>
+
     </div>
 
     <!-- Affichage des cartes Pokémon -->
