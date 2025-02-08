@@ -8,22 +8,19 @@
   font-family: "Montserrat", serif;
   font-optical-sizing: auto;
   font-weight: normal;
-  font-style: normal;
-}
+  font-style: normal; }
 
 /* Titre */
 h1 {
   text-align: center;
   font-size: 28px;
   color: #333;
-  margin-bottom: 20px;
-}
+  margin-bottom: 20px; }
 
 /* Liste des commandes */
 ul {
   list-style: none;
-  padding: 0;
-}
+  padding: 0; }
 
 /* Carte de commande */
 .order-item {
@@ -32,52 +29,127 @@ ul {
   padding: 20px;
   margin-bottom: 15px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
-}
+  transition: transform 0.2s ease-in-out; }
 
 .order-item:hover {
-  transform: scale(1.02);
-}
+  transform: scale(1.02); }
 
 /* Numéro de commande */
 h3 {
   font-size: 22px;
   color: #007bff;
-  margin-bottom: 10px;
-}
+  margin-bottom: 10px; }
 
 /* Liste des articles */
 .order-item ul {
   padding: 10px;
   background: #f1f1f1;
-  border-radius: 8px;
-}
+  border-radius: 8px; }
 
 .order-item li {
   font-size: 16px;
   padding: 5px 0;
-  color: #555;
-}
+  color: #555; }
 
 /* Total de la commande */
 .order-item p {
   font-weight: bold;
   color: #222;
   margin-top: 10px;
-  font-size: 18px;
-}
+  font-size: 18px; }
 
 /* Message si aucune commande */
 .order-history div p {
   text-align: center;
   font-size: 18px;
-  color: #999;
-}
+  color: #999; }
 
 .order-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5em;
-}
+  gap: 1.5em; }
+
+/* Media Query pour 1100px */
+@media (max-width: 1100px) {
+  .order-container {
+    grid-template-columns: repeat(2, 1fr);
+    /* Passer à 2 colonnes */
+    gap: 1.5em; }
+
+  .order-item {
+    padding: 15px;
+    /* Réduire le padding */ }
+
+  h1 {
+    font-size: 26px;
+    /* Réduire la taille du titre */ }
+
+  .order-item h3 {
+    font-size: 20px;
+    /* Réduire la taille du numéro de commande */ }
+
+  .order-item li {
+    font-size: 15px;
+    /* Réduire la taille de la police des articles */ }
+
+  .order-item p {
+    font-size: 16px;
+    /* Réduire la taille de la police du total */ } }
+/* Media Query pour 768px */
+@media (max-width: 768px) {
+  .order-container {
+    grid-template-columns: 1fr;
+    /* Passer à une seule colonne */
+    gap: 1.5em; }
+
+  .order-item {
+    padding: 10px;
+    /* Réduire encore le padding */ }
+
+  h1 {
+    font-size: 22px;
+    /* Réduire la taille du titre */ }
+
+  .order-item h3 {
+    font-size: 18px;
+    /* Réduire la taille du numéro de commande */ }
+
+  .order-item li {
+    font-size: 14px;
+    /* Réduire la taille de la police des articles */ }
+
+  .order-item p {
+    font-size: 15px;
+    /* Réduire la taille du total */ } }
+/* Media Query pour 576px */
+@media (max-width: 576px) {
+  .order-container {
+    grid-template-columns: 1fr;
+    /* Toujours une seule colonne sur très petits écrans */
+    gap: 1em; }
+
+  .order-item {
+    padding: 8px;
+    /* Réduire encore le padding */ }
+
+  h1 {
+    font-size: 20px;
+    /* Réduire la taille du titre */ }
+
+  .order-item h3 {
+    font-size: 16px;
+    /* Réduire la taille du numéro de commande */ }
+
+  .order-item li {
+    font-size: 13px;
+    /* Réduire la taille de la police des articles */ }
+
+  .order-item p {
+    font-size: 14px;
+    /* Réduire la taille du total */ }
+
+  .order-history div p {
+    font-size: 16px;
+    /* Réduire la taille de la police du message "aucune commande" */ } }
 
 /*# sourceMappingURL=STYLE_ShopHistoryView.css.map */

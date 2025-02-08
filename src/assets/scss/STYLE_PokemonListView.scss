@@ -218,8 +218,7 @@
 
 
         &:hover {
-            transform: scale(1.1);
-            cursor: grab;
+            cursor: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Pok%C3%A9_Ball_icon.svg'), auto;
         }
     }
 }
@@ -285,7 +284,7 @@
 select {
     appearance: none;
     background-color: #fff;
-    
+
     border: none;
     border-radius: 32px;
     padding: 10px 15px;
@@ -297,7 +296,7 @@ select {
     outline: none;
     width: 200px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  
+
 
     option {
 
@@ -305,16 +304,107 @@ select {
         background: #fff;
         color: #333;
         font-weight: normal;
-      }
-  }
+    }
+}
 
 
-  .search-options{
+.search-options {
     display: flex;
     align-items: center;
     margin-bottom: 2em;
-    gap:1em;
-  }
-  
- 
-  
+    gap: 1em;
+}
+
+
+@media (max-width: 1500px) {
+    .card-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .card-container .pokemon-card .pokemon-img {
+        height: 6em;
+        /* Ajustez selon vos besoins */
+        width: auto;
+        /* Conserve le ratio de l'image */
+    }
+
+    .card-container .pokemon-card {
+        width: 18vw;
+    }
+
+    .search-bar {
+        width: 60%;
+    }
+}
+
+@media (max-width: 992px) {
+    .card-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card-container .pokemon-card .pokemon-img {
+        height: 5em;
+        /* Ajustez selon vos besoins */
+        width: auto;
+        /* Conserve le ratio de l'image */
+    }
+
+    .card-container .pokemon-card {
+        width: 25vw;
+    }
+
+    .search-bar {
+        width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-container .pokemon-card .pokemon-img {
+        height: 5em;
+        /* Ajustez selon vos besoins */
+        width: auto;
+        /* Conserve le ratio de l'image */
+    }
+
+    .card-container .pokemon-card {
+        width: 35vw;
+    }
+
+    .search-bar {
+        width: 80%;
+    }
+
+    .pagination {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+
+    .card-container .pokemon-card .pokemon-img {
+        height: 7em;
+        /* Ajustez selon vos besoins */
+        width: auto;
+        /* Conserve le ratio de l'image */
+    }
+
+    .card-container .pokemon-card {
+        width: 70vw;
+    }
+
+    .search-bar {
+        width: 90%;
+    }
+
+    .pagination {
+        flex-direction: column;
+        gap: 0.5em;
+    }
+}
