@@ -1,35 +1,47 @@
 # TGC-Poke-App
 
-This template should help get you started developing with Vue 3 in Vite.
+**TGC-Poke-App** is a Vue.js application that simulates the purchase of Pokémon cards. It uses Vue 3 for the frontend and SCSS for styling.
 
-## Recommended IDE Setup
+## 🚀 Getting Started
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### Clone the Repo
 
-## Customize configuration
+```bash
+git clone https://github.com/your-username/TGC-Poke-App.git
+cd TGC-Poke-App
+```
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### 🐳 Using Docker
 
-## Project Setup
+1. Build the Docker image:
 
-```sh
+```bash
+docker build -t tgc-poke-app .
+```
+
+2. Run the app:
+
+```bash
+docker run -p 8080:8080 tgc-poke-app
+```
+
+### 💻 Running Locally
+
+1. Install dependencies:
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+2. Start the dev server:
 
-```sh
+```bash
 npm run dev
 ```
 
-### Compile and Minify for Production
+## ⚙️ Technologies
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+- **Vue 3**: JavaScript framework
+- **Pinia**: State management
+- **Vite**: Build tool
+- **Docker**: Containerization
