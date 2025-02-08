@@ -7,7 +7,7 @@
 ### Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/TGC-Poke-App.git
+git clone https://github.com/Nin0A/TGC-Poke-App.git
 cd TGC-Poke-App
 ```
 
