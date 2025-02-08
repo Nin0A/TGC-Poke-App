@@ -5,3 +5,13 @@ services:
       - "8080:8080"
     container_name: tgc-pokemon-app
     restart: unless-stopped
+    volumes:
+      - .:/app
+      - /app/node_modules # Empêche les conflits avec les dépendances locales
+
+  sass-watcher:
+    image: node:lts-alpine
+    working_dir: /app
+    volumes:
+      - ./src/assets:/app/src/assets
+    command: npx sass --watch src/assets/scss/:src/assets/css/
