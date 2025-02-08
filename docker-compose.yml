@@ -1,0 +1,7 @@
+services:
+  vue-app:
+    build: .
+    ports:
+      - "8080:8080"
+    container_name: tgc-pokemon-app
+    restart: unless-stopped
