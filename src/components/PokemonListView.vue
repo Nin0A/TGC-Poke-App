@@ -1,7 +1,11 @@
 <script>
 import '../assets/css/STYLE_PokemonListView.css';
+import PokemonCardComponent from './PokemonCardComponent.vue';
 
 export default {
+  components: {
+    PokemonCardComponent,
+  },
   data() {
     return {
       pokemon_list: [],  // Liste des Pokémon filtrés pour affichage
@@ -180,22 +184,13 @@ goToPreviousPage() {
 
     <!-- Affichage des cartes Pokémon -->
     <div class="card-container">
-      <div v-for="pokemon in pokemon_list" :key="pokemon.id">
-        <router-link :to="{ name: 'pokemon-item', params: { id: pokemon.id } }">
-          <div class="pokemon-card">
-            <img class="pokemon-img" :src="pokemon.sprites.other.dream_world.front_default" :alt="pokemon.name">
-            <h2 class="pokemon-id"> #{{ pokemon.id }} </h2>
-            <div class="types">
-              <p v-for="type in pokemon.types" :key="type.slot" :class="`type-${type.type.name}`">
-                {{ type.type.name }}
-              </p>
-            </div>
-            <div class="pokemon-name">
-              <h1>{{ pokemon.name }}</h1>
-            </div>
-          </div>
-        </router-link>
-      </div>
+
+      <PokemonCardComponent
+        v-for="pokemon in pokemon_list"
+        :key="pokemon.id"
+        :pokemon="pokemon"
+      />
+
 
       <!-- Pagination -->
       <div class="pagination">
