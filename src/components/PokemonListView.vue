@@ -8,16 +8,16 @@ export default {
   },
   data() {
     return {
-      pokemon_list: [],  // Liste des Pokémon filtrés pour affichage
-      all_pokemons: [],  // Liste complète des Pokémons récupérés de l'API
+      pokemon_list: [],
+      all_pokemons: [],
       current_pokemons:[],
-      next_url: null,    // URL de la page suivante
-      previous_url: null, // URL de la page précédente
-      totalPages: 0,      // Nombre total de pages
-      currentPage: 1,     // Page actuelle
-      limit: 40,          // Nombre de Pokémon par page
-      searchQuery: '',    // Requête de recherche
-      selectedType: '',   // Type sélectionné pour le filtre
+      next_url: null,
+      previous_url: null,
+      totalPages: 0,
+      currentPage: 1,
+      limit: 40,
+      searchQuery: '',
+      selectedType: '',
       typeColors: {
         fire: "#F57D31",
         bug: "#A7B723",
@@ -52,8 +52,8 @@ export default {
         }
 
         const pokemons = await response.json();
-        this.next_url = pokemons.next;  // URL de la page suivante
-        this.previous_url = pokemons.previous;  // URL de la page précédente
+        this.next_url = pokemons.next;
+        this.previous_url = pokemons.previous;
 
         // Calculer le nombre total de pages
         this.totalPages = Math.ceil(pokemons.count / this.limit);
@@ -63,8 +63,8 @@ export default {
           this.fetchSinglePokemon(pokemon.url)
         );
         const fetchedPokemons = await Promise.all(fetchPromises);
-        this.all_pokemons = fetchedPokemons;  // Sauvegarder tous les Pokémons
-        this.pokemon_list = this.all_pokemons;  // Initialiser avec tous les Pokémons
+        this.all_pokemons = fetchedPokemons;
+        this.pokemon_list = this.all_pokemons;
       } catch (error) {
         console.error("Error fetching Pokémon data:", error);
       }
@@ -110,8 +110,8 @@ goToPreviousPage() {
         }
 
         const data = await response.json();
-        const pokemons = data.pokemon.map(p => p.pokemon);  // Récupérer uniquement les Pokémon
-        this.pokemon_list = await Promise.all(pokemons.map(pokemon => this.fetchSinglePokemon(pokemon.url)));  // Récupérer les informations complètes des Pokémon
+        const pokemons = data.pokemon.map(p => p.pokemon);
+        this.pokemon_list = await Promise.all(pokemons.map(pokemon => this.fetchSinglePokemon(pokemon.url)));
       } catch (error) {
         console.error("Error fetching Pokémon by type:", error);
       }
@@ -120,10 +120,9 @@ goToPreviousPage() {
     // Fonction pour appliquer la recherche et le filtre par type
     searchPokemons() {
       console.log('searchpokemon');
-      let filteredPokemons = this.all_pokemons;  // Filtrage sur la liste complète
+      let filteredPokemons = this.all_pokemons;
 
       console.log(filteredPokemons);
-      // Filtrer par nom
       if (this.searchQuery.trim() !== '') {
         console.log(this.searchQuery);
         filteredPokemons = filteredPokemons.filter((pokemon) =>
@@ -131,7 +130,6 @@ goToPreviousPage() {
         );
       }
 
-      // Filtrer par type
       if (this.selectedType) {
       console.log(this.selectedType);
         filteredPokemons = filteredPokemons.filter((pokemon) =>
@@ -140,7 +138,7 @@ goToPreviousPage() {
 
       }
 
-      this.pokemon_list = filteredPokemons;  // Mettre à jour la liste affichée
+      this.pokemon_list = filteredPokemons;
 
       console.log(this.pokemon_list);
     },
@@ -148,9 +146,9 @@ goToPreviousPage() {
     // Fonction de changement de type
     filterByType() {
       if (this.selectedType) {
-        this.fetchPokemonsByType(this.selectedType);  // Si un type est sélectionné, récupérer les Pokémon de ce type
+        this.fetchPokemonsByType(this.selectedType);
       } else {
-        this.fetchPokemons('https://pokeapi.co/api/v2/pokemon?limit=40');  // Si aucun type n'est sélectionné, récupérer tous les Pokémon
+        this.fetchPokemons('https://pokeapi.co/api/v2/pokemon?limit=40');
       }
     },
   },

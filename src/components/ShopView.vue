@@ -5,14 +5,14 @@ import '../assets/css/STYLE_ShopView.css';
 export default {
   data() {
     return {
-      pokemon_list: [], // Liste des pokémons
+      pokemon_list: [],
       next_url: null,
       previous_url: null,
     };
   },
   methods: {
     getWeightAndHeight(w) {
-      return w / 10; // Conversion du poids en kilogrammes
+      return w / 10;
     },
     clearCart() {
       const cartStore = useCartStore();
@@ -23,20 +23,16 @@ export default {
   const cartItems = cartStore.cart;
 
   if (cartItems.length > 0) {
-    // Créer une nouvelle commande
     const order = {
-      items: [...cartItems], // Copie du panier
+      items: [...cartItems],
       totalPrice: cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
-      date: new Date().toLocaleString() // Ajouter une date à la commande
+      date: new Date().toLocaleString()
     };
 
-    // Ajouter cette commande à l'historique
     cartStore.setOrderHistory(order);
 
-    // Vider le panier
     cartStore.clearCart();
 
-    // Rediriger vers la page de l'historique des commandes
     this.$router.push('/shop-history');
   }
 },
@@ -53,7 +49,7 @@ export default {
     // Méthode pour supprimer un article du panier
     removeFromCart(itemId) {
       const cartStore = useCartStore();
-      cartStore.removeFromCart(itemId); // Cette fonction devra être dans ton cartStore
+      cartStore.removeFromCart(itemId);
     }
   },
 

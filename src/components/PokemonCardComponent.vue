@@ -1,3 +1,4 @@
+
 <script>
 import '../assets/css/STYLE_PokemonListView.css';
 
@@ -10,7 +11,6 @@ export default {
   },
 };
 </script>
-$
 
 <template>
   <router-link :to="{ name: 'pokemon-item', params: { id: pokemon.id } }">

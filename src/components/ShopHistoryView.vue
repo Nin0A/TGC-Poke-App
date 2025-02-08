@@ -7,10 +7,9 @@ import '../assets/css/STYLE_ShopHistoryView.css';
 export default {
   setup() {
     const cartStore = useCartStore();
-    const route = useRoute(); // Récupérer la route actuelle pour obtenir le paramètre de l'URL
-    const purchaseSuccess = ref(false); // Variable pour contrôler l'affichage de la pop-up
+    const route = useRoute();
+    const purchaseSuccess = ref(false);
 
-    // Assurer la synchronisation avec localStorage au chargement
     watchEffect(() => {
       if (cartStore.orderHistory.length === 0) {
         const storedHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
@@ -18,13 +17,11 @@ export default {
       }
     });
 
-    // Vérifier si le statut est 'success' dans l'URL
     const orderStatus = computed(() => route.query.status === 'success' ? 'Commande réussie !' : '');
 
-    // Vérifier si un achat a été effectué juste avant cette page (utilisation de localStorage)
     if (localStorage.getItem('purchaseSuccess') === 'true') {
       purchaseSuccess.value = true;
-      localStorage.removeItem('purchaseSuccess'); // Supprimer l'indicateur après avoir affiché
+      localStorage.removeItem('purchaseSuccess');
     }
 
     return {

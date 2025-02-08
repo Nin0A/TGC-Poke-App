@@ -1,6 +1,6 @@
 <script>
 import '../assets/css/STYLE_PokemonCard.css';
-import { useCartStore } from '@/stores/cartStore'; // Import du store Pinia
+import { useCartStore } from '@/stores/cartStore';
 
 export default {
   props: {
@@ -42,13 +42,13 @@ export default {
         throw new Error(message);
       }
       this.pokemon = await response.json();
-      this.updateMainColor(this.pokemon.types[0].type.name); // Utilisation de la couleur du type
+      this.updateMainColor(this.pokemon.types[0].type.name);
     },
 
     updateMainColor(typeName) {
       const color = this.typeColors[typeName];
       if (color) {
-        document.documentElement.style.setProperty('--main-color', color); // Mise à jour de la couleur
+        document.documentElement.style.setProperty('--main-color', color);
       } else {
         console.warn(`Type ${typeName} not found in typeColors`);
       }
@@ -75,7 +75,7 @@ export default {
     // Fonction pour retirer un Pokémon du panier
     removeFromCart() {
       const cartStore = useCartStore();
-      cartStore.removeFromCart(this.pokemon.id); // Fonction que tu devras ajouter dans ton cartStore
+      cartStore.removeFromCart(this.pokemon.id);
     },
 
     incrementQuantity() {

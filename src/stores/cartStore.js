@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useCartStore = defineStore('cart', {
   state: () => ({
     cart: [],
-    orderHistory: JSON.parse(localStorage.getItem('orderHistory')) || [] // Charger depuis localStorage
+    orderHistory: JSON.parse(localStorage.getItem('orderHistory')) || []
   }),
   actions: {
     addToCart(pokemon) {
@@ -30,7 +30,7 @@ export const useCartStore = defineStore('cart', {
 
     setOrderHistory(order) {
       this.orderHistory.push(order);
-      localStorage.setItem('orderHistory', JSON.stringify(this.orderHistory)); // Sauvegarde dans localStorage
+      localStorage.setItem('orderHistory', JSON.stringify(this.orderHistory));
     },
 
     getTotalQuantity() {

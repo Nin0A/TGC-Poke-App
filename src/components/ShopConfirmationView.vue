@@ -3,10 +3,10 @@ import { useCartStore } from '@/stores/cartStore';
 import cartMixin from '@/mixins/cartMixin';
 
 export default {
-  mixins: [cartMixin], // Utilisation de la mixin
+  mixins: [cartMixin],
   computed: {
     cartItems() {
-      const cartStore = useCartStore(); // Accès au store Pinia
+      const cartStore = useCartStore();
       return cartStore.cart;
     },
     totalPrice() {
@@ -17,28 +17,25 @@ export default {
   },
   methods: {
     confirmPurchase() {
-      const cartStore = useCartStore(); // Accès au store Pinia
+      const cartStore = useCartStore();
       const cartItems = cartStore.cart;
 
       if (cartItems.length > 0) {
         const order = {
-          items: [...cartItems], // Copier les articles du panier
-          totalPrice: this.totalPrice, // Total calculé dans la computed
-          date: new Date().toLocaleString() // Date et heure actuelles
+          items: [...cartItems],
+          totalPrice: this.totalPrice,
+          date: new Date().toLocaleString()
         };
 
-        // Ajouter la commande à l'historique
         cartStore.setOrderHistory(order);
-        // Vider le panier après la commande
         cartStore.clearCart();
-        // Ajouter un indicateur pour la pop-up
-        localStorage.setItem('purchaseSuccess', 'true'); // Sauvegarde l'indicateur dans localStorage
-        // Rediriger l'utilisateur vers l'historique des commandes
+
+        localStorage.setItem('purchaseSuccess', 'true');
+
         this.$router.push('/shop-history');
       }
     },
     cancelPurchase() {
-      // Si l'utilisateur annule, redirigeons-le vers la page du panier
       this.$router.push('/shop');
     }
   }
